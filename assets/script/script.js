@@ -3,9 +3,12 @@ var nextButton = document.getElementById('next-btn');
 var questionContainerElement = document.getElementById('questions-container');
 var questionElement = document.getElementById('questions');
 var answerButtonsElement = document.getElementById('answer-buttons');
-var resultsButton = document.getElementById('results-btn')
-var score = 0; 
-var userAnswers = [];
+var resultsButton = document.getElementById('results-btn');
+var countdownEl = document.getElementById('countdown');
+var timeEl = document.querySelector(".time");
+var score = 0; // should go up with each correct answer! 
+var secondsLeft = 10; 
+
 
 let shuffledQuestions, currentQuestionIndex
 
@@ -15,11 +18,10 @@ nextButton.addEventListener('click', ()=> {
   currentQuestionIndex++;
   setNextQuestion();
 })
-// resultsButton.addEventListener('click', results);
+resultsButton.addEventListener('click', results);
 
 function startQuiz() { 
   startButton.classList.add('hide');
-  console.log(shuffledQuestions)
   shuffledQuestions = question.sort(()=> Math.random() - .5);
   currentQuestionIndex = 0;
   questionContainerElement.classList.remove('hide');
@@ -38,12 +40,10 @@ function showQuestion(question) {
     var button = document.createElement('button');
     button.innerText = answers.text;
     button.classList.add('btn')
-    if (answers.correct){
+    if (answers.correct){ 
+      score++;
       button.dataset.correct = answers.correct
-      score ++;
-      console.log(score)
-    }else{
-      (score - 1)
+    }else { 
     }
     button.addEventListener('click', selectAnswer);
     answerButtonsElement.appendChild(button);
@@ -74,9 +74,8 @@ function selectAnswer(e) {
 }
 
 
-
 function results() {
- console.log('Results here')
+  console.log('Results!')
 }
 
 function setStatusClass(element, correct) {
